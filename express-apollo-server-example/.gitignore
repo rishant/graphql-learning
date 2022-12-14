@@ -3,5 +3,4 @@ package-lock.json
 
 # temporary blocking
 schema/*
-utilities/*
 graphql/*
