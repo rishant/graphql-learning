@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-import { db } from './../utilities/MongoConnection';
+import { db } from '../utilities/MongoConnection';
 
 const authorSchema = new mongoose.Schema({
     firstName: {

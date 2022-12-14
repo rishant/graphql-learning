@@ -1,5 +1,7 @@
 import { Book } from "../models/book.model";
 
+import Rating, {getStar} from "../models/rating";
+
 exports.create = (req, res) => {
     const book = new Book(req.body);
     book.save().then((doc) => {
@@ -14,8 +16,19 @@ exports.update = (req, res) => {
 }
 
 exports.findAll = (req, res) => {
+    let response = [];
     Book.find({}).then(function (books) {
-        res.status(200).json(books);
+        books.forEach(book => {
+            let respBook = {
+                id : book.get("_id"),
+                title : book.get("title"),
+                pages : book.get("pages"),
+                rating : getStar(book.get("rating")),
+                authorId : book.get("authorId"),
+            };
+            response.push(respBook);
+        })
+        res.status(200).json(response);
     }).catch(err => {
         res.status(500).send({ message: err.message || "Some error occurred while fetching all the books." });
     });
@@ -25,7 +38,14 @@ exports.findOne = (req, res) => {
     Book.findOneAndReplace({ _id: req.params.id }, req.body, {
         returnDocument: 'after',
     }).then((doc) => {
-        res.status(200).json(doc);
+        let respBook = {
+            id : doc.get("_id"),
+            title : doc.get("title"),
+            pages : doc.get("pages"),
+            rating : getStar(doc.get("rating")),
+            authorId : doc.get("authorId"),
+        };
+        res.status(200).json(respBook);
     }).catch((err) => {
         res.status(500).send({ message: err.message || "Some error occurred while fetching book by id." });
     });

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-import { db } from './../utilities/MongoConnection';
+import { db } from '../utilities/MongoConnection';
 
 const bookSchema = new mongoose.Schema({
     title: {
@@ -13,6 +13,7 @@ const bookSchema = new mongoose.Schema({
     },
     rating: {
         type: String,
+        enum: ['FIVE_STARS', 'FOUR_STARS', 'THREE_STARS', 'TWO_STARS', 'ONE_STAR'],
         required: true
     },
     authorId: {
