@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "start:babel-node": "babel-node server.js"
+    "start:babel-node": "babel-node server.js",
+    "start:nodemon-babel-node": "nodemon --exec babel-node server.js"
   },
   "keywords": [],
   "author": "",
