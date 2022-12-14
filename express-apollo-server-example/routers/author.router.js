@@ -1,16 +1,10 @@
 const express = require('express');
 const authorRouters = express.Router();
 
-authorRouters.get('/', function (req, res) {
-    res.status(200).send({
-        message: `get all authors`
-     });
-});
+import AuthorRestApiController from '../controllers/author.restcontroller'
 
-authorRouters.put('/:id', function (req, res) {
-    res.status(200).send({
-       message: `get author ${req.params.id}`
-    });
-});
+authorRouters.get('/', AuthorRestApiController.findAll);
+
+authorRouters.get('/:id', AuthorRestApiController.findOne);
 
 module.exports = authorRouters;
