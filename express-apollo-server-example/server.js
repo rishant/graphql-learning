@@ -2,6 +2,12 @@ import express from 'express';
 import http from 'http';
 import cors from 'cors';
 
+import { ApolloServer } from '@apollo/server';
+import { expressMiddleware } from '@apollo/server/express4';
+import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer'
+
+import { resolvers } from './schema/Resolvers'
+
 // Step: 1 - Express Server Initialization.
 const app = express();
 const httpServer = http.createServer(app);
@@ -38,8 +44,26 @@ app.use('/api/books', bookRouter)
 import authorRouter from './routers/author.router'
 app.use('/api/authors', authorRouter)
 
-// Step: 7 - Express NodeJS WebFramework -> Over -> Http NodeJS WebServer.
-const PORT = 4000;
-httpServer.listen(PORT, () => {
-    console.log(`🚀 Server ready at http://localhost:${PORT}`);
-});
+const fs = require('fs');
+const path = require('path');
+console.log('directory-name 👉️', __dirname);
+
+// Step: 7 - ApolloServer -> Over -> Express NodeJS WebFramework -> Over -> Http NodeJS WebServer.
+async function startApolloServer() { 
+    // The ApolloServer constructor requires two parameters: your schema
+    // definition and your set of resolvers.
+    const server = new ApolloServer({
+        typeDefs: fs.readFileSync(path.join(__dirname, 'graphql', 'schema.graphql'), 'utf8'),
+        resolvers,
+        plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    });
+    await server.start();        
+    app.use(expressMiddleware(server));
+
+    // Step: 8 - Express NodeJS WebFramework -> Over -> Http NodeJS WebServer.
+    const PORT = 4000;
+    httpServer.listen(PORT, () => {
+        console.log(`🚀 Server ready at http://localhost:${PORT}`);
+    });
+}
+startApolloServer();

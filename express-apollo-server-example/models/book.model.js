@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
 import { db } from '../utilities/MongoConnection';
 
@@ -12,9 +12,7 @@ const bookSchema = new mongoose.Schema({
         required: true
     },
     rating: {
-        type: String,
-        enum: ['FIVE_STARS', 'FOUR_STARS', 'THREE_STARS', 'TWO_STARS', 'ONE_STAR'],
-        required: true
+        type: Schema.Types.Mixed
     },
     authorId: {
         type: String,

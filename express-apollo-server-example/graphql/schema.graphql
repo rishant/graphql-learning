@@ -1,0 +1,46 @@
+type Book {
+    id: ID!
+    title: String!
+    pages: Int!
+    rating: Rating
+    authorId: String!
+}
+
+type Rating {
+    name: String
+	star: String
+}
+
+type Author {
+    id: ID!
+    firstName: String!
+    lastName: String!
+}
+
+input AuthorInput {
+    firstName: String!
+    lastName: String!
+}
+
+input BookInput {
+    title: String!
+    pages: Int!
+    rating: String
+    authorId: String!
+}
+
+type Query {
+    allBooks: [Book]
+    findOne(id: ID!): Book
+    allAuthors: [Author]
+}
+
+type Mutation {
+	createAuthor(authorInput: AuthorInput): Author
+	createBook(bookInput: BookInput): Book
+}
+
+# type Schema {
+#	Query
+#	Mutation
+# }
