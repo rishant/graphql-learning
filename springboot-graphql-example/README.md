@@ -138,3 +138,260 @@ Response:
 	    "authorId": "6398d78ea21af6427c23d400"
 	}
 ```
+
+# GraphQL Schema:
+
+```
+	type Book {
+	    id: ID!
+	    title: String!
+	    pages: Int!
+	    rating: Rating
+	    authorId: String!
+	}
+	
+	type Rating {
+		rating: String
+		star: String
+	}
+	
+	type Author {
+	    id: ID!
+	    firstName: String!
+	    lastName: String!
+	}
+
+```
+
+# Graph API Queries [ POSTMAN Client ]
+
+```
+GraphQL Request URI:
+	POST 'http://localhost:7070/graphql'
+	
+GraphQL Request: 
+	query {
+	    allAuthors{
+	        id
+	        firstName
+	        lastName
+	    }
+	}
+	
+GraphQL Response:
+	{
+	    "data": {
+	        "allAuthors": [
+	            {
+	                "id": "6398bcd967719d021399427a",
+	                "firstName": "Rishant",
+	                "lastName": "Gupta"
+	            }
+	        ]
+	    }
+	}
+```
+
+```
+GraphQL Request URI:
+	POST 'http://localhost:7070/graphql'
+	
+GraphQL Request: 
+	query {
+	    allBooks{
+	        id
+	        title
+	        pages
+	        rating {
+	            star
+	        }
+	        authorId
+	    }
+	}
+	
+GraphQL Response:
+	{
+	    "data": {
+	        "allBooks": [
+	            {
+	                "id": "6398bd7d67719d02139942c1",
+	                "title": "Java Hacks",
+	                "pages": 200,
+	                "rating": {
+	                    "star": "⭐️⭐️⭐️⭐️⭐️"
+	                },
+	                "authorId": "6398bcd967719d021399427a"
+	            }
+	        ]
+	    }
+	}
+```
+
+```
+GraphQL Request URI:
+	POST 'http://localhost:7070/graphql'
+	
+GraphQL Request: 
+	query {
+	    findOne(id: "6398bd7d67719d02139942c1"){
+	        id
+	        title
+	        pages
+	        rating {
+	            star
+	        }
+	        authorId        
+	    }
+	}
+	
+GraphQL Response:
+	{
+	    "data": {
+	        "findOne": {
+	            "id": "6398bd7d67719d02139942c1",
+	            "title": "Java Hacks",
+	            "pages": 200,
+	            "rating": {
+	                "star": "⭐️⭐️⭐️⭐️⭐️"
+	            },
+	            "authorId": "6398bcd967719d021399427a"
+	        }
+	    }
+	}
+```
+
+```
+GraphQL Request URI:
+	POST 'http://localhost:7070/graphql'
+	
+GraphQL Request: 
+	query {
+	    allAuthors{
+	        id
+	        firstName
+	        lastName
+	    }
+	    findOne(id: "6398bd7d67719d02139942c1"){
+	        id
+	        title
+	        pages
+	        rating {
+	            star
+	        }
+	        authorId        
+	    }
+	    allBooks{
+	        id
+	        title
+	        pages
+	        rating {
+	            star
+	        }
+	        authorId
+	    }
+	}
+	
+GraphQL Response:
+	{
+	    "data": {
+	        "allAuthors": [
+	            {
+	                "id": "6398bcd967719d021399427a",
+	                "firstName": "Rishant",
+	                "lastName": "Gupta"
+	            }
+	        ],
+	        "findOne": {
+	            "id": "6398bd7d67719d02139942c1",
+	            "title": "Java Hacks",
+	            "pages": 200,
+	            "rating": {
+	                "star": "⭐️⭐️⭐️⭐️⭐️"
+	            },
+	            "authorId": "6398bcd967719d021399427a"
+	        },
+	        "allBooks": [
+	            {
+	                "id": "6398bd7d67719d02139942c1",
+	                "title": "Java Hacks",
+	                "pages": 200,
+	                "rating": {
+	                    "star": "⭐️⭐️⭐️⭐️⭐️"
+	                },
+	                "authorId": "6398bcd967719d021399427a"
+	            }
+	        ]
+	    }
+	}
+```
+
+# Graph API Queries Client [ CURL ]
+```
+curl --location --request POST 'http://localhost:7070/graphql' \
+--header 'Content-Type: application/json' \
+--data-raw '{"query":"query {\r\n    allAuthors{\r\n        id\r\n        firstName\r\n        lastName\r\n    }\r\n    findOne(id: \"6398bd7d67719d02139942c1\"){\r\n        id\r\n        title\r\n        pages\r\n        rating {\r\n            star\r\n        }\r\n        authorId        \r\n    }\r\n    allBooks{\r\n        id\r\n        title\r\n        pages\r\n        rating {\r\n            star\r\n        }\r\n        authorId\r\n    }\r\n}","variables":{}}'
+```
+
+# Graph API Mutation [ POSTMAN Client ]
+
+```
+GraphQL Request URI:
+	POST 'http://localhost:7070/graphql'
+	
+GraphQL Request: 
+	mutation{
+	    createAuthor(author: {
+	        firstName: "Akshya",
+	        lastName: "Kumar"
+	    }){
+	        id
+	    }
+	}
+
+GraphQL Response:
+	{
+	    "data": {
+	        "createAuthor": {
+	            "id": "6398d78ea21af6427c23d400"
+	        }
+	    }
+	}
+```
+
+```
+GraphQL Request URI:
+	POST 'http://localhost:7070/graphql'
+	
+GraphQL Request: 
+	mutation{
+	    createBook(bookInput: {
+	        title: "Javascript Practices",
+	        pages: 450,
+	        rating: "FOUR_STARS",
+	        authorId: "6398d78ea21af6427c23d400"
+	    }){
+	        id
+	        title
+	        pages
+	        rating {
+	            star
+	        }
+	        authorId
+	    }
+	}
+
+GraphQL Response:
+	{
+	    "data": {
+	        "createBook": {
+	            "id": "6398fd90eed5442229eb3337",
+	            "title": "Javascript Practices",
+	            "pages": 450,
+	            "rating": {
+	                "star": "⭐️⭐️⭐️⭐️"
+	            },
+	            "authorId": "6398d78ea21af6427c23d400"
+	        }
+	    }
+	}
+```
