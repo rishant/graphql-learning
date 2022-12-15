@@ -12,7 +12,7 @@ const resolvers = {
                         id : book.get("_id"),
                         title : book.get("title"),
                         pages : book.get("pages"),
-                        rating : book.get("rating") != null? RatingEnum.valueOf(book.get("rating")).toString() : null,
+                        rating : book.get("rating") != null? RatingEnum.valueOf(book.get("rating")).toJson() : null,
                         authorId : book.get("authorId"),
                     };
                     response.push(respBook);
@@ -20,19 +20,21 @@ const resolvers = {
             });
             return response
         },
+
         findOne: async (id) => {
             const book = await Book.findById({"id" : id}).then(doc => {
                 let respBook = {
                     id : doc.get("_id"),
                     title : doc.get("title"),
                     pages : doc.get("pages"),
-                    rating : doc.get("rating") != null? RatingEnum.valueOf(doc.get("rating")).toString() : null,
+                    rating : doc.get("rating") != null? RatingEnum.valueOf(doc.get("rating")).toJson() : null,
                     authorId : doc.get("authorId"),
                 };
                 return respBook;
             })
             return book
         },
+
         allAuthors: async () => {
             const authors = await Author.find()
             return authors
@@ -53,7 +55,7 @@ const resolvers = {
                 id : doc.get("_id"),
                 title : doc.get("title"),
                 pages : doc.get("pages"),
-                rating : doc.get("rating") != null? RatingEnum.valueOf(doc.get("rating")).toString() : null,
+                rating : doc.get("rating") != null? RatingEnum.valueOf(doc.get("rating")).toJson() : null,
                 authorId : doc.get("authorId"),
             };
             console.log("Book added successfully");

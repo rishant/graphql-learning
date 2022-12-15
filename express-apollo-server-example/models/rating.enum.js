@@ -44,7 +44,7 @@ export class RatingEnum {
     }
   }
 
-  toString() {
+  toJson() {
     return {
       "name": this.name,
       "star": this.star
