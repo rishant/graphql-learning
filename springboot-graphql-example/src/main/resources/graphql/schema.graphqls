@@ -7,7 +7,7 @@ type Book {
 }
 
 type Rating {
-	rating: String
+	name: String
 	star: String
 }
 
