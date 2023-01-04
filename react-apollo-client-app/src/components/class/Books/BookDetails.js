@@ -6,38 +6,64 @@ import TextField from "@mui/material/TextField";
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
 import { Query } from "@apollo/client/react/components";
-import {GET_ONE_BOOK_BY_TITLE} from '../../../schema/query';
+import {GET_ONE_BOOK_BY_TITLE, GET_BOOK_BY_ID} from '../../../schema/query';
 
 class BookDetails extends React.Component {
   constructor(props) {
     super();
     // Define State Object
-    this.state = {title: '', getBookByTitleResponse: null};
+    this.state = {
+      title: '', 
+      getBookByTitleResponse: null, 
+      bookId: '', 
+      getBookByIdResponse: null
+    };
   }
 
   getBookByTitle = (bookTitle) => {
     console.log("I am in getBookByTile");
     return (
     <Query query={GET_ONE_BOOK_BY_TITLE} variables={{title: bookTitle}} onCompleted={data => console.log(data)} fetchPolicy={'network-only'}>
-      {({ loading: getAllBooksLoading, error: getAllBooksError, data: getAllBooksData }) => {
-        if (getAllBooksLoading) return <p>Loading…</p>;
-        if (getAllBooksError) return <p>Error {getAllBooksError.message}</p>;
-        return (<p>{getAllBooksData.findBookByTitle.id} : {getAllBooksData.findBookByTitle.title} : {getAllBooksData.findBookByTitle.pages} : {getAllBooksData.findBookByTitle.rating.star}</p>);
+      {({ loading: getBookByTitleLoading, error: getBookByTitleError, data: getBookByTitleData }) => {
+        if (getBookByTitleLoading) return <p>Loading…</p>;
+        if (getBookByTitleError) return <p>Error {getBookByTitleError.message}</p>;
+        return (<p>{getBookByTitleData.findBookByTitle.id} : {getBookByTitleData.findBookByTitle.title} : {getBookByTitleData.findBookByTitle.pages} : {getBookByTitleData.findBookByTitle.rating.star}</p>);
       }}
     </Query>
     );
   }
-
   handleOnChange = (event) => {
     console.log("Old: " + this.state.title + ", New: " + event.target.value)
     // Upsert State Object => For Re-render lifecycle
     this.setState({title: event.target.value})
-  };
-
+  };  
   handleOnClick = () => {
     let response = this.getBookByTitle(this.state.title);
     // Upsert State Object => For Re-render lifecycle
     this.setState({getBookByTitleResponse: response});  
+  };
+  
+  getBookById = (bookId) => {
+    console.log("I am in getBookById");
+    return (
+    <Query query={GET_BOOK_BY_ID} variables={{id: bookId}} onCompleted={data => console.log(data)} fetchPolicy={'network-only'}>
+      {({ loading: getBookByIdLoading, error: getBookByIdError, data: getBookByIdData }) => {
+        if (getBookByIdLoading) return <p>Loading…</p>;
+        if (getBookByIdError) return <p>Error {getBookByIdError.message}</p>;
+        return (<p>{getBookByIdData.findBookById.id} : {getBookByIdData.findBookById.title} : {getBookByIdData.findBookById.pages} : {getBookByIdData.findBookById.rating.star}</p>);
+      }}
+    </Query>
+    );
+  }
+  handleOnChangeById = (event) => {
+    console.log("Old: " + this.state.bookId + ", New: " + event.target.value)
+    // Upsert State Object => For Re-render lifecycle
+    this.setState({bookId: event.target.value})
+  };
+  handleOnClickById = () => {
+    let response = this.getBookById(this.state.bookId);
+    // Upsert State Object => For Re-render lifecycle
+    this.setState({getBookByIdResponse: response});  
   };
 
   render() {
@@ -61,6 +87,18 @@ class BookDetails extends React.Component {
           </Fab>
           <p>{this.state.title}</p>
           <p>{this.state.getBookByTitleResponse}</p>
+          <hr/>
+          <TextField
+            id="outlined-title"
+            label="BookId"
+            value={this.state.bookId}
+            onChange={this.handleOnChangeById}
+          />
+          <Fab color="success" aria-label="add" onClick={this.handleOnClickById}>
+              <PlayArrowIcon fontSize="small" />
+          </Fab>
+          <p>{this.state.bookId}</p>
+          <p>{this.state.getBookByIdResponse}</p>
         </Box>
       </>
     );

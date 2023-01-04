@@ -15,9 +15,9 @@ export const GET_ALL_BOOKS = gql`
   }
 `;
 
-export const GET_ONE_BOOK = gql`
-  query FindOne($id: ID!) {
-    findOne(id: $id) {
+export const GET_BOOK_BY_ID = gql`
+  query FindBookById($id: ID!) {
+    findBookById(id: $id) {
       id
       title
       pages

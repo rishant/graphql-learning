@@ -23,3 +23,17 @@ export const CREATE_AUTHOR = gql`
     }
   }
 `
+export const DELETE_BOOK = gql`
+  mutation DeleteBook($id: ID!) {
+    deleteBook(id: $id) {
+      id
+      title
+      pages
+      rating {
+        name
+        star
+      }
+      authorId
+    }
+  }
+`

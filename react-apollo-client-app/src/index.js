@@ -5,7 +5,7 @@ import App from './App';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 export const springbootGraphQLClient = new ApolloClient({
-  uri: 'https://localhost:7070/graphql',
+  uri: 'http://localhost:7070/graphql',
   cache: new InMemoryCache(),
   // defaultOptions: {
   //   watchQuery: {
@@ -46,6 +46,9 @@ const expressGraphQLClient = new ApolloClient({
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  // <ApolloProvider client={springbootGraphQLClient}>
+  //   <App />
+  // </ApolloProvider>
   <ApolloProvider client={expressGraphQLClient}>
     <App />
   </ApolloProvider>
