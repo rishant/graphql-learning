@@ -18,6 +18,7 @@ class BookDetails extends React.Component {
       bookId: '', 
       getBookByIdResponse: null
     };
+    // this.textfield = React.createRef();
   }
 
   getBookByTitle = (bookTitle) => {
@@ -66,6 +67,12 @@ class BookDetails extends React.Component {
     this.setState({getBookByIdResponse: response});  
   };
 
+  // handleOnClickById2 = () => {
+  //   let response = this.getBookById(this.textfield.current.value);
+  //   // Upsert State Object => For Re-render lifecycle
+  //   this.setState({getBookByIdResponse: response});  
+  // };
+
   render() {
     return (
       <>
@@ -89,12 +96,13 @@ class BookDetails extends React.Component {
           <p>{this.state.getBookByTitleResponse}</p>
           <hr/>
           <TextField
+            // inputRef={this.textfield}  // Uncontrolled Component Access via React.createRef() hook.
             id="outlined-title"
             label="BookId"
             value={this.state.bookId}
             onChange={this.handleOnChangeById}
           />
-          <Fab color="success" aria-label="add" onClick={this.handleOnClickById}>
+          <Fab color="success" aria-label="add" onClick={this.handleOnClickById} /*onClick={this.handleOnClickById2}*/>
               <PlayArrowIcon fontSize="small" />
           </Fab>
           <p>{this.state.bookId}</p>

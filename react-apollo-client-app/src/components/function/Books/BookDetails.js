@@ -19,7 +19,8 @@ function BookDetails() {
   const handleOnClick = () => {
     getBookByTitle({ variables: { title : title }})
   };
-  
+
+  // const textfield = React.useRef();
   const [getBookById, { loading: getBookByIdLoading, error: getBookByIdError, data: getBookByIdData }] = useLazyQuery(GET_BOOK_BY_ID);
   const [bookId, setBookId] = React.useState("");
   const handleOnChangeById = (event) => {
@@ -29,6 +30,9 @@ function BookDetails() {
   const handleOnClickById = () => {
     getBookById({ variables: { id : bookId }})
   };
+  // const handleOnClickById2 = () => {
+  //   getBookById({ variables: { id : textfield.current.value }})
+  // };
 
   return (
     <>
@@ -62,12 +66,13 @@ function BookDetails() {
         <hr/>
         
         <TextField
+          // inputRef={textfield}  // Uncontrolled Component Access via React.useRef() hook.
           id="outlined-title"
           label="BookID"
           value={bookId}
           onChange={handleOnChangeById}
         />
-        <Fab color="success" aria-label="add" onClick={handleOnClickById}>
+        <Fab color="success" aria-label="add" onClick={handleOnClickById} /*onClick={handleOnClickById2}*/>
             <PlayArrowIcon fontSize="small" />
         </Fab>
         <p>{`${bookId}`}</p>
