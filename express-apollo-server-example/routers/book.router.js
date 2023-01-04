@@ -5,14 +5,16 @@ import BookRestApiController from '../controllers/book.restcontroller'
 
 // C U R D
 
-bookRouters.put('/', BookRestApiController.create);
+bookRouters.put('/', BookRestApiController.createBook);
 
-bookRouters.post('/:id', BookRestApiController.update);
+bookRouters.post('/:id', BookRestApiController.updateBook);
 
-bookRouters.get('/', BookRestApiController.findAll);
+bookRouters.get('/', BookRestApiController.findAllBooks);
 
-bookRouters.get('/:id', BookRestApiController.findOne);
+bookRouters.get('/:id', BookRestApiController.findBookById);
 
-bookRouters.delete('/:id', BookRestApiController.delete);
+bookRouters.delete('/:id', BookRestApiController.deleteBookbyId);
+
+bookRouters.get('/title/:title', BookRestApiController.findBookByTitle);
 
 module.exports = bookRouters;

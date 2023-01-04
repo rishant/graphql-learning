@@ -24,7 +24,7 @@ exports.findAll = (req, res) => {
 }
 
 exports.findOne = (req, res) => {
-    Author.findOneAndReplace({ _id: req.params.id }, req.body, {
+    Author.findById({ _id: req.params.id }, req.body, {
         returnDocument: 'after',
     }).then((doc) => {
         res.status(200).json(doc);

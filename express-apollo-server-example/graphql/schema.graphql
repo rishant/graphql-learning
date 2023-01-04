@@ -31,13 +31,15 @@ input BookInput {
 
 type Query {
     allBooks: [Book]
-    findOne(id: ID!): Book
+    findBookById(id: ID!): Book
+    findBookByTitle(title: String!): Book
     allAuthors: [Author]
 }
 
 type Mutation {
 	createAuthor(authorInput: AuthorInput): Author
 	createBook(bookInput: BookInput): Book
+    deleteBook(id: ID!): Book
 }
 
 # type Schema {

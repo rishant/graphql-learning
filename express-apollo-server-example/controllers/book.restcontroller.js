@@ -1,7 +1,7 @@
 import { Book } from "../models/book.model";
 import {RatingEnum} from "../models/rating.enum";
 
-exports.create = (req, res) => {
+exports.createBook = (req, res) => {
     const book = new Book(req.body);
     book.save().then((doc) => {
         let bookDTO = {
@@ -17,11 +17,11 @@ exports.create = (req, res) => {
     });
 }
 
-exports.update = (req, res) => {
+exports.updateBook = (req, res) => {
     res.status(200).send({ message: "Update api is under development." });
 }
 
-exports.findAll = (req, res) => {
+exports.findAllBooks = (req, res) => {
     let response = [];
     Book.find({}).then(function (books) {
         books.forEach(book => {
@@ -40,8 +40,8 @@ exports.findAll = (req, res) => {
     });
 }
 
-exports.findOne = (req, res) => {
-    Book.findOneAndReplace({ _id: req.params.id }, req.body, {
+exports.findBookById = (req, res) => {
+    Book.findOne({ _id: req.params.id }, req.body, {
         returnDocument: 'after',
     }).then((doc) => {
         let bookDTO = {
@@ -57,7 +57,24 @@ exports.findOne = (req, res) => {
     });
 }
 
-exports.delete = (req, res) => {
+exports.findBookByTitle = (req, res) => {
+    Book.findOne({ title: req.params.title }, req.body, {
+        returnDocument: 'after',
+    }).then((doc) => {
+        let bookDTO = {
+            id : doc.get("_id"),
+            title : doc.get("title"),
+            pages : doc.get("pages"),
+            rating : doc.get("rating") != null? RatingEnum.valueOf(doc.get("rating")).toJson() : null,
+            authorId : doc.get("authorId"),
+        };
+        res.status(200).json(bookDTO);
+    }).catch((err) => {
+        res.status(500).send({ message: err.message || "Some error occurred while fetching book by id." });
+    });
+}
+
+exports.deleteBookbyId = (req, res) => {
     Book.findByIdAndDelete({ 
         _id: req.params.id 
     }).then((doc) => {
