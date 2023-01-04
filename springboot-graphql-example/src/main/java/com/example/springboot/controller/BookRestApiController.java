@@ -30,7 +30,7 @@ public class BookRestApiController {
     // C U R D
     
     @PutMapping("/books")
-    public Book addBook(@RequestBody BookInput book) {
+    public Book createBook(@RequestBody BookInput book) {
     	Book bookEntity = new Book(book.getTitle(), book.getPages(), Rating.valueOf(book.getRating()),
     			book.getAuthorId());
     	return bookRepository.insert(bookEntity);
@@ -53,21 +53,26 @@ public class BookRestApiController {
     }
     
     @GetMapping("/books")
-    public List<Book> findAll() {
+    public List<Book> findAllBooks() {
         return bookRepository.findAll();
     }
 
     @GetMapping("/books/{id}")
-    public Book findOne(@PathVariable("id") String id) {
+    public Book findById(@PathVariable("id") String id) {
     	Optional<Book> book = bookRepository.findById(id);
         return book.isPresent() ? book.get() : null;
     }
-    
+
     @DeleteMapping("/books/{id}")
-    public String deleteOne(@PathVariable("id") String id) {
+    public String deleteBookById(@PathVariable("id") String id) {
     	bookRepository.deleteById(id);
     	Optional<Book> book = bookRepository.findById(id); 
         return book.isPresent() ? "Given id is deleted." : "Given id is not deleted.";
     }
 
+    @GetMapping("/books/title/{title}")
+    public Book findBookByTitle(@PathVariable("title") String title) {
+    	List<Book> books = bookRepository.findByTitle(title);
+    	return books != null ? books.get(0) : null;
+    }
 }

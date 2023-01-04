@@ -29,9 +29,15 @@ public class BookController {
     }
 
     @QueryMapping
-    public Book findOne(@Argument String id) {
+    public Book findBookById(@Argument String id) {
     	Optional<Book> book = bookRepository.findById(id);
         return book.isPresent() ? book.get() : null;
+    }
+    
+    @QueryMapping
+    public Book findBookByTitle(@Argument String title) {
+    	List<Book> books = bookRepository.findByTitle(title);
+    	return books != null ? books.get(0) : null;
     }
     
 	@MutationMapping("createBook")

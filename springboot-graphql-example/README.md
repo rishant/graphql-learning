@@ -1,11 +1,12 @@
 # Learning References:
 
-	https://www.youtube.com/watch?v=K_MGBQ_1Nic
-	https://www.youtube.com/watch?v=8JTjCIaU7-k
-	https://github.com/danvega/graphql-store
-	
-	https://www.youtube.com/watch?v=H_U2Bu75Ohc
-	https://github.com/DevProblems/spring-for-graphql-springboot-r2dbc
+[![SC2 Video](https://img.youtube.com/vi/atA2OovQBic/0.jpg)](https://www.youtube.com/watch?v=atA2OovQBic)	
+[![SC2 Video](https://img.youtube.com/vi/K_MGBQ_1Nic/0.jpg)](https://www.youtube.com/watch?v=K_MGBQ_1Nic)
+[![SC2 Video](https://img.youtube.com/vi/8JTjCIaU7-k/0.jpg)](https://www.youtube.com/watch?v=8JTjCIaU7-k)
+https://github.com/danvega/graphql-store
+
+[![SC2 Video](https://img.youtube.com/vi/H_U2Bu75Ohc/0.jpg)](https://www.youtube.com/watch?v=H_U2Bu75Ohc)
+https://github.com/DevProblems/spring-for-graphql-springboot-r2dbc
 
 # MongoDB Schema:
 ```
