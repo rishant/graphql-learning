@@ -5,17 +5,38 @@ import Tooltip from '@mui/material/Tooltip';
 
 import { DataGrid } from "@mui/x-data-grid";
 
-import { useQuery} from "@apollo/client";
+import { useQuery, useLazyQuery} from "@apollo/client";
 import { GET_ALL_BOOKS } from "../../../schema/query";
 
 function BookList() {
-  const { loading: getAllBooksLoading, error: getAllBooksError, data: getAllBooksData } = useQuery(GET_ALL_BOOKS, {
+  // const { loading: getAllBooksLoading, error: getAllBooksError, data: getAllBooksData } = useQuery(GET_ALL_BOOKS, {
+  //   fetchPolicy: 'network-only', // Used for first execution
+  //   nextFetchPolicy: 'cache-first', // Used for subsequent executions
+  // });
+  const [getAllBooks, { loading: getAllBooksLoading, error: getAllBooksError, data: getAllBooksData }] = useLazyQuery(GET_ALL_BOOKS, {
     fetchPolicy: 'network-only', // Used for first execution
     nextFetchPolicy: 'cache-first', // Used for subsequent executions
   });
 
-  if (getAllBooksLoading) return <p>Loading…</p>;
-  if (getAllBooksError) return <p>Error {getAllBooksError.message}</p>;
+  React.useEffect(() => {
+    getAllBooks();
+  }, [])
+
+  const getAllBooksJSX=()=> {
+    return (
+      <>
+        { getAllBooksLoading? <p>Loading…</p>:'' }
+        { getAllBooksError? <p>Error {getAllBooksError.message}</p>:'' }
+        <DataGrid
+          rows={getAllBooksData? getAllBooksData.allBooks: []}
+          columns={bookColumns}
+          pageSize={5}
+          rowsPerPageOptions={[5]}
+          checkboxSelection
+        />
+      </>
+    )
+  }
 
   const bookColumns = [
     { field: "id", 
@@ -58,7 +79,6 @@ function BookList() {
     },
   ];
 
-
   return (
     <>
       <h2>Functional Component BookList</h2>
@@ -68,20 +88,20 @@ function BookList() {
             <Button size="small">Remove a row</Button>
             <Button size="small">Add a row</Button>
           </Stack>
+          { getAllBooksJSX() }
           {/* {
-            getAllBooksData.allBooks.map(({ id, title, pages, rating }) => (
-            <div key={id}>
-              <p>{`${id}: ${title}: ${pages}: ${rating.star}`}</p>
-            </div>
-          ))
-        } */}
+            getAllBooksLoading? <p>Loading…</p>:''
+          }
+          {
+            getAllBooksError? <p>Error {getAllBooksError.message}</p>:''
+          }
           <DataGrid
-            rows={getAllBooksData.allBooks}
+            rows={getAllBooksData? getAllBooksData.allBooks: []}
             columns={bookColumns}
             pageSize={5}
             rowsPerPageOptions={[5]}
             checkboxSelection
-          />
+          /> */}
         </div>
       </div>
     </>

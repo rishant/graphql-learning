@@ -28,10 +28,19 @@ function BookDetails() {
     setBookId(event.target.value);
   };
   const handleOnClickById = () => {
-    getBookById({ variables: { id : bookId }})
+    getBookById({ 
+      variables: { 
+        id : bookId 
+      }
+    })
   };
+  
   // const handleOnClickById2 = () => {
-  //   getBookById({ variables: { id : textfield.current.value }})
+    // getBookById({ 
+    //   variables: { 
+    //     id : textfield.current.value 
+    //   }
+    // })
   // };
 
   return (

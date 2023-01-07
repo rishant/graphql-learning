@@ -14,26 +14,21 @@ class BookList extends React.Component {
     this.state = {};
   }
 
-  getAllBooksData = () => (
-    <Query query={GET_ALL_BOOKS}>
+  getAllBooksJSX = () => (
+    <Query query={GET_ALL_BOOKS} fetchPolicy="network-only" nextFetchPolicy="cache-first">
       {({ loading: getAllBooksLoading, error: getAllBooksError, data: getAllBooksData }) => {
-        if (getAllBooksLoading) return <p>Loading…</p>;
-        if (getAllBooksError) return <p>Error {getAllBooksError.message}</p>;
-        /*
-      return getAllBooksData.allBooks.map(({ id, title, pages, rating }) => (
-        <div key={id}>
-          <p>{`${id}: ${title}: ${pages}: ${rating.star}`}</p>
-        </div>
-      ));
-      */
         return (
-          <DataGrid
-            rows={getAllBooksData.allBooks}
-            columns={this.bookColumns}
-            pageSize={5}
-            rowsPerPageOptions={[5]}
-            checkboxSelection
-          />
+          <>
+            { getAllBooksLoading? <p>Loading…</p>: '' }
+            { getAllBooksError? <p>Error {getAllBooksError.message}</p>: '' }
+            <DataGrid
+              rows={getAllBooksData? getAllBooksData.allBooks: []}
+              columns={this.bookColumns}
+              pageSize={5}
+              rowsPerPageOptions={[5]}
+              checkboxSelection
+            />
+          </>
         );
       }}
     </Query>
@@ -90,7 +85,24 @@ class BookList extends React.Component {
               <Button size="small">Remove a row</Button>
               <Button size="small">Add a row</Button>
             </Stack>
-            {this.getAllBooksData()}
+            { this.getAllBooksJSX() }
+            {/* <Query query={GET_ALL_BOOKS} fetchPolicy="network-only" nextFetchPolicy="cache-first">
+              {({ loading: getAllBooksLoading, error: getAllBooksError, data: getAllBooksData }) => {
+                return (
+                  <>
+                    {getAllBooksLoading? <p>Loading…</p>: ''}
+                    {getAllBooksError? <p>Error {getAllBooksError.message}</p>: ''}
+                    <DataGrid
+                      rows={getAllBooksData? getAllBooksData.allBooks: []}
+                      columns={this.bookColumns}
+                      pageSize={5}
+                      rowsPerPageOptions={[5]}
+                      checkboxSelection
+                    />
+                  </>
+                );
+              }}
+            </Query> */}
           </div>
         </div>
       </>
