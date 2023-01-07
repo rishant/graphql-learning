@@ -6,6 +6,9 @@ import BookdetailsClassComponent from "./components/class/Books/BookDetails";
 import BookListFunctionalComponent from "./components/function/Books/BookList";
 import BookdetailsFunctionalComponent from "./components/function/Books/BookDetails";
 
+import DummyClassComponentLifeCycle from './components/class/Dummy/component-lifecycle';
+import DummyFunctionalComponentLifeCycle from "./components/function/Dummy/component-lifecycle";
+
 function App() {
   return (
     <div>
@@ -20,6 +23,9 @@ function App() {
             /*border: "2px solid yellow",*/
           }}
         >
+          <div>
+            <DummyClassComponentLifeCycle />
+          </div>
           <div style={{ /*border: "1px solid red"*/ }}>
             <BookListClassComponent />
           </div>
@@ -33,7 +39,7 @@ function App() {
             height: "100%",
             position: "absolute",
             left: "50%",
-            top: "15%",
+            top: "10%",
           }}
         ></div>
         <div
@@ -44,6 +50,9 @@ function App() {
             /*border: "2px solid yellow",*/
           }}
         >
+          <div>
+            <DummyFunctionalComponentLifeCycle />
+          </div>
           <div style={{ /*border: "1px solid red"*/ }}>
             <BookListFunctionalComponent />
           </div>
